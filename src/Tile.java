@@ -1,12 +1,14 @@
-import java.awt.*;
-import javax.swing.*;
-
 
 public class Tile {
 	
+	private String ID;
 	
-	public Tile(){
-
+	public Tile(String ID){
+		this.ID = ID;
+	}
+	
+	public String getID(){
+		return ID;
 	}
 	
 }
