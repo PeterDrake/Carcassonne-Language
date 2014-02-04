@@ -14,17 +14,3 @@ public class Carcassonne {
 		});
 	}
 }
-
-class GameWindow extends JFrame {
-	
-	private static final int CENTER = 72;
-	
-	public GameWindow() {
-		GridBagLayout layout = new GridBagLayout();
-		setLayout(layout);
-		
-		add(new TileImage(new ImageIcon("04.jpg").getImage()), new GBC(CENTER, CENTER));
-		pack();
-	}
-	
-}
