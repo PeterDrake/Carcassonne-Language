@@ -11,6 +11,7 @@ class GameWindow extends JFrame {
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
 
+		
 		add(new TileImage(new ImageIcon("04.jpg").getImage()), new GBC(CENTER,
 				CENTER));
 
@@ -22,6 +23,7 @@ class GameWindow extends JFrame {
 				CENTER - 1, CENTER));
 		add(new TileImage(new ImageIcon("EmptyTile.png").getImage()), new GBC(
 				CENTER, CENTER + 1));
+
 
 		pack();
 	}
