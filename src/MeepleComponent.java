@@ -10,37 +10,37 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-//
-//import mouse.MouseComponent.MouseMotionHandler;
-//import FollowerPlacement.ImageComponent;
-//import FollowerPlacement.MouseHandler;
+
 
 public class MeepleComponent extends JComponent {
 
 	private Image imageFollower;
-	private boolean meeple; 
+	private boolean meeple;
 	private int meepleX;
-	private int meepleY; 
-
+	private int meepleY;
+	private static final int DEFAULT_WIDTH = 150;
+	private static final int DEFAULT_HEIGHT = 150;
+	private Image resizedFollower;
+	private int resizeNumber = 28;
+	
 	public MeepleComponent() {
 		imageFollower = new ImageIcon("MEEPLE.png").getImage();
+		resizedFollower = imageFollower.getScaledInstance(resizeNumber, resizeNumber,Image.SCALE_DEFAULT);
 		addMouseListener(new MouseHandler());
 	}
 
 	public void paintComponent(Graphics g) {
-		System.out.println("here");
+
 		if (meeple) {
-			g.drawImage(imageFollower, meepleX,
-			meepleY, null);
-			
-			
+			g.drawImage(resizedFollower, meepleX - (resizeNumber/2), meepleY - (resizeNumber/2), null);
+
 		}
 	}
-
 
 	public void add(Point2D p) {
 		double x = p.getX();
@@ -49,26 +49,18 @@ public class MeepleComponent extends JComponent {
 		meeple = true;
 		meepleX = (int) x;
 		meepleY = (int) y;
-		
+
 		repaint();
 	}
 
-	
-
 	private class MouseHandler extends MouseAdapter {
 		public void mousePressed(MouseEvent event) {
-//			// add a new square if the cursor isn't inside a square
-//			current = find(event.getPoint());
-//			if (current == null)
-				add(event.getPoint());
+			add(event.getPoint());
 		}
-
-//		public void mouseClicked(MouseEvent event) {
-//			// remove the current square if double clicked
-//			event.getPoint();
-//		}
 	}
-
 	
+	public Dimension getPreferredSize() {
+		return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	}
 
 }

@@ -21,6 +21,8 @@ public class Carcassonne {
 
 class GameWindow extends JFrame {
 	public GameWindow() {
+		add(new MeepleComponent());
+		pack();
 		add(new ImageComponent());
 		pack();
 	}
@@ -31,11 +33,13 @@ class ImageComponent extends JComponent {
 	private static final int DEFAULT_WIDTH = 150;
 	private static final int DEFAULT_HEIGHT = 150;
 	private Image image;
+	private Image imageFollower; 
 	
 	
 	
 	ImageComponent() {
 		image = new ImageIcon("00.jpg").getImage();
+		imageFollower = new ImageIcon("MEEPLE.png").getImage();
 		
 	}
 
@@ -45,7 +49,6 @@ class ImageComponent extends JComponent {
 		}
 		g.drawImage(image, (DEFAULT_WIDTH - image.getWidth(this)) / 2,
 				(DEFAULT_HEIGHT - image.getHeight(this)) / 2, null);
-		
 	}
 
 	public Dimension getPreferredSize() {
