@@ -20,13 +20,15 @@ public class Board {
 			} else {
 				ScoreTracker currentScore = new ScoreTracker();
 				currentScore.score += 1;
-				if(tile.getFollower().location == 1){
-					//watchout for multiple roads
+				if (tile.getFollower().location == 1) {
+					// watchout for multiple roads, this so far does not account
+					// for it
 					currentScore.followers[tile.getFollower().player] += 1;
 				}
 				for (int i = 0; i < tile.SIDES; i++) {
 					if (tile.getSide(i) == tile.ROAD) {
-						currentScore.score += roadScore(getNeighbor(i, tile));
+						currentScore.score += roadScore(currentScore,
+								getNeighbor(i, tile), opposite(i));
 					}
 				}
 			}
@@ -35,9 +37,33 @@ public class Board {
 		// If it scores a road, add it to the player
 	}
 
-	public int roadScore(ScoreTracker score, Tile tile) {
+	public int roadScore(ScoreTracker currentScore, Tile tile, int origin) {
+		if (!tile.isEnd()) {
+			for (int i = 0; i < tile.SIDES; i++) {
+				if (!(origin == i) && tile.getSide(i) == tile.ROAD) {
+					return currentScore.score += roadScore(currentScore,
+							getNeighbor(i, tile), opposite(i));
+				}
+			}
+		}
+		return 1;
+	}
 
-		return 0;
+	public int opposite(int i) {
+		if (i == 0) {
+			return 2;
+		}
+		if (i == 1) {
+			return 3;
+		}
+		if (i == 2) {
+			return 0;
+		}
+		if (i == 3) {
+			return 1;
+		}
+
+		return -1;
 	}
 
 	public Tile getNeighbor(int x, Tile tile) {

@@ -25,5 +25,14 @@ public class TileTest {
 	public void testHasRoad() {
 		assertTrue(tile.hasRoad());
 	}
+	
+	@Test
+	public void testSetFollower() {
+		assertNull(tile.getFollower());
+		tile.setFollower(0, 1);
+		assertEquals(tile.getFollower().player, 0);
+		assertEquals(tile.getFollower().location, 1);
+	}
+
 
 }

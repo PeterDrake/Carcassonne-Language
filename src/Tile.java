@@ -17,8 +17,7 @@ public class Tile {
 	}
 	
 	public void setFollower(int player, int location){
-		follower.player = player;
-		follower.location = location;
+		follower = new Follower(player, location);
 		
 	}
 	
