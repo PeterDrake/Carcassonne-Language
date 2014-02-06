@@ -8,6 +8,8 @@ public class TileBag {
 		
 		tiles[0] = new Tile("03");
 		tiles[1] = new Tile("00");
+		tiles[2] = new Tile("01");
+		tiles[3] = new Tile("02");
 		
 	}
 	
