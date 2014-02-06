@@ -36,7 +36,7 @@ public class Board {
 					}
 				}
 			} else {
-				// TODO Write code for end points with multiple roads/follower
+				// TODO Write code for start points with multiple roads/follower
 				// placement options
 			}
 

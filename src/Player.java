@@ -1,12 +1,6 @@
 
 public class Player {
 	
-//	public final int BLUE = ;
-//	public final int GREEN = ;
-//	public final int BLACK = ;
-//	public final int RED = ;
-//	public final int YELLOW = ;
-	
 	private int playerNumber;
 	private int score;
 	
@@ -21,6 +15,10 @@ public class Player {
 	
 	public int getScore() {
 		return score;
+	}
+	
+	public int getPlayerNumber() {
+		return playerNumber;
 	}
 
 }
