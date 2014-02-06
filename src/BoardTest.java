@@ -5,22 +5,37 @@ import org.junit.Test;
 
 public class BoardTest {
 	
-	public final int SIZE = 144;
 	private Board board;
 	
 	
 	@Before
 	public void setUp() {
-		board = new Board(SIZE);
+		board = new Board();
 	}
 
 	@Test
 	public void testScoreRoads() {
-		assertEquals(board.getTile(72,72), 1);
-		int newX = 72;
-		int newY = 73;
-		board.addTile(new Tile(newX,newY), newX, newY);
-		assertEquals(board.getTile(newX , newY), 2);
+		int playerUp = 0;
+		int x = board.CENTER;
+		int y = board.CENTER;
+		
+		board.scoreRoads(x, y);
+		assertEquals(board.getPlayerScore(playerUp), 0);
+		
+		board.placeFollower(x, y, playerUp, 1);
+		board.scoreRoads(x, y);
+		assertEquals(board.getPlayerScore(playerUp), 2);
+		
+		y += 1;
+		board.addTile(new Tile(x, y), x, y);
+		// Confusing add tile
+		board.placeFollower(x, y, playerUp, 1);
+		board.scoreRoads(x, y);
+		assertEquals(board.getPlayerScore(1), 0);
+		assertEquals(board.getPlayerScore(2), 0);
+		assertEquals(board.getPlayerScore(3), 0);
+		assertEquals(board.getPlayerScore(4), 0);
+		assertEquals(board.getPlayerScore(playerUp), 2);
 	}
 
 	@Test

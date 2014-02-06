@@ -10,6 +10,7 @@ public class Tile {
 	private Follower follower;
 
 	public Tile(int x, int y) {
+		// Make this a method when merging
 		sides = new int[] { 0, 1, 0, 1 };
 		isEnd = true;
 		this.x = x;
@@ -49,6 +50,14 @@ public class Tile {
 
 	public int getY() {
 		return y;
+	}
+
+	public void placeFollower(int player, int location) {
+		follower = new Follower(player, location);
+	}
+	
+	public void removeFollower() {
+		follower = null;
 	}
 
 }

@@ -30,8 +30,8 @@ public class TileTest {
 	public void testSetFollower() {
 		assertNull(tile.getFollower());
 		tile.setFollower(0, 1);
-		assertEquals(tile.getFollower().player, 0);
-		assertEquals(tile.getFollower().location, 1);
+		assertEquals(tile.getFollower().getPlayer(), 0);
+		assertEquals(tile.getFollower().getLocation(), 1);
 	}
 
 

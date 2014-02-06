@@ -1,10 +1,18 @@
 public class Board {
 
-	private Tile[][] board;
+	public int CENTER = 72;
 
-	public Board(int size) {
-		board = new Tile[size][size];
-		board[size / 2][size / 2] = new Tile(size / 2, size / 2);
+	private Tile[][] board;
+	private Player[] players;
+
+	public Board() {
+		board = new Tile[CENTER * 2][CENTER * 2];
+		board[CENTER][CENTER] = new Tile(CENTER, CENTER);
+
+		players = new Player[5];
+		for (int i = 0; i < players.length; i++) {
+			players[i] = new Player(i);
+		}
 	}
 
 	public void addTile(Tile tile, int x, int y) {
@@ -14,39 +22,65 @@ public class Board {
 	public void scoreRoads(int x, int y) {
 		Tile tile = board[x][y];
 		if (tile.hasRoad()) {
-			if (tile.isEnd()) {
-				// if it is an endpoint then check for multiple roads
-
-			} else {
-				ScoreTracker currentScore = new ScoreTracker();
+			ScoreTracker currentScore = new ScoreTracker();
+			if (!tile.isEnd()) {
 				currentScore.score += 1;
-				if (tile.getFollower().location == 1) {
-					// watchout for multiple roads, this so far does not account
-					// for it
-					currentScore.followers[tile.getFollower().player] += 1;
+				if (tile.getFollower().getLocation() == 1) {
+					// Watch for multiple roads
+					currentScore.followers[tile.getFollower().getPlayer()] += 1;
 				}
 				for (int i = 0; i < tile.SIDES; i++) {
 					if (tile.getSide(i) == tile.ROAD) {
-						currentScore.score += roadScore(currentScore,
+						currentScore.score += roadScoreR(currentScore,
 								getNeighbor(i, tile), opposite(i));
 					}
 				}
+			} else {
+				// TODO Write code for end points with multiple roads/follower
+				// placement options
 			}
-			// updatePlayerScore(score)
+			
+			boolean[] owners = new boolean[5];
+			int max = 1;
+			for (int i = 0; i < currentScore.followers.length; i++) {
+				if (currentScore.followers[i] == max) {
+					owners[i] = true;
+				} else if (currentScore.followers[i] > max) {
+					max = currentScore.followers[i];
+					for (int j = 0; j < owners.length; j++) {
+						owners[j] = false;
+					}
+					owners[i] = true;
+				}
+			}
+			for (int i = 0; i < owners.length; i++) {
+				if (owners[i]) {
+					addPlayerScore(i, currentScore.score);
+				}
+			}
+			// Not sure if this is a good algorithm
 		}
-		// If it scores a road, add it to the player
 	}
 
-	public int roadScore(ScoreTracker currentScore, Tile tile, int origin) {
+	public int roadScoreR(ScoreTracker currentScore, Tile tile, int origin) {
 		if (!tile.isEnd()) {
+			if (tile.getFollower().getLocation() == 1) {
+				// Watch for multiple roads
+				currentScore.followers[tile.getFollower().getPlayer()] += 1;
+			}
 			for (int i = 0; i < tile.SIDES; i++) {
 				if (!(origin == i) && tile.getSide(i) == tile.ROAD) {
-					return currentScore.score += roadScore(currentScore,
+					return currentScore.score += roadScoreR(currentScore,
 							getNeighbor(i, tile), opposite(i));
 				}
 			}
+			return -1;
+		} else {
+			// TODO Write code for end points with multiple roads/follower
+			// placement options
+			return -1;
 		}
-		return 1;
+
 	}
 
 	public int opposite(int i) {
@@ -86,6 +120,18 @@ public class Board {
 
 	public Tile getTile(int x, int y) {
 		return board[x][y];
+	}
+
+	public int getPlayerScore(int player) {
+		return players[player].getScore();
+	}
+	
+	public void addPlayerScore(int player, int score) {
+		players[player].addScore(score);
+	}
+
+	public void placeFollower(int x, int y, int player, int location) {
+		getTile(x, y).placeFollower(player, location);
 	}
 
 }
