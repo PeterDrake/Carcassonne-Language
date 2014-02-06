@@ -24,7 +24,7 @@ public class BoardTest {
 		
 		board.placeFollower(x, y, playerUp, 1);
 		board.scoreRoads(x, y);
-		assertEquals(board.getPlayerScore(playerUp), 2);
+		assertEquals(board.getPlayerScore(playerUp), 1);
 		
 		y += 1;
 		board.addTile(new Tile(x, y), x, y);

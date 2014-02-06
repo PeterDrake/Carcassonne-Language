@@ -25,7 +25,7 @@ public class Board {
 			ScoreTracker currentScore = new ScoreTracker();
 			if (!tile.isEnd()) {
 				currentScore.score += 1;
-				if (tile.getFollower().getLocation() == 1) {
+				if (!(tile.getFollower() == null) && (tile.getFollower().getLocation() == 1)) {
 					// Watch for multiple roads
 					currentScore.followers[tile.getFollower().getPlayer()] += 1;
 				}
@@ -39,7 +39,7 @@ public class Board {
 				// TODO Write code for end points with multiple roads/follower
 				// placement options
 			}
-			
+
 			boolean[] owners = new boolean[5];
 			int max = 1;
 			for (int i = 0; i < currentScore.followers.length; i++) {
@@ -63,24 +63,26 @@ public class Board {
 	}
 
 	public int roadScoreR(ScoreTracker currentScore, Tile tile, int origin) {
-		if (!tile.isEnd()) {
-			if (tile.getFollower().getLocation() == 1) {
-				// Watch for multiple roads
-				currentScore.followers[tile.getFollower().getPlayer()] += 1;
-			}
-			for (int i = 0; i < tile.SIDES; i++) {
-				if (!(origin == i) && tile.getSide(i) == tile.ROAD) {
-					return currentScore.score += roadScoreR(currentScore,
-							getNeighbor(i, tile), opposite(i));
+		if (!(tile == null)) {
+			if (!tile.isEnd()) {
+				if (tile.getFollower().getLocation() == 1) {
+					// Watch for multiple roads
+					currentScore.followers[tile.getFollower().getPlayer()] += 1;
 				}
+				for (int i = 0; i < tile.SIDES; i++) {
+					if (!(origin == i) && tile.getSide(i) == tile.ROAD) {
+						return currentScore.score += roadScoreR(currentScore,
+								getNeighbor(i, tile), opposite(i));
+					}
+				}
+				return -1;
+			} else {
+				// TODO Write code for end points with multiple roads/follower
+				// placement options
+				return -1;
 			}
-			return -1;
-		} else {
-			// TODO Write code for end points with multiple roads/follower
-			// placement options
-			return -1;
 		}
-
+		return 0;
 	}
 
 	public int opposite(int i) {
@@ -125,7 +127,7 @@ public class Board {
 	public int getPlayerScore(int player) {
 		return players[player].getScore();
 	}
-	
+
 	public void addPlayerScore(int player, int score) {
 		players[player].addScore(score);
 	}

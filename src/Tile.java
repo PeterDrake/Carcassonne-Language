@@ -12,9 +12,16 @@ public class Tile {
 	public Tile(int x, int y) {
 		// Make this a method when merging
 		sides = new int[] { 0, 1, 0, 1 };
-		isEnd = true;
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void makeEnd() {
+		isEnd = true;
+	}
+	
+	public void makeNotEnd() {
+		isEnd = false;
 	}
 	
 	public void setFollower(int player, int location){
