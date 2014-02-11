@@ -14,12 +14,15 @@ public class RotateAction implements ActionListener{
 	private GameWindow window;
 	private TileImage tile;
 	
-	public RotateAction(GameWindow window, TileImage tile){
+	public RotateAction(GameWindow window){
 		this.window = window;
+	}
+	
+	public void setTile(TileImage tile){
 		this.tile = tile;
 		Image img = tile.getImage();
 		currentTileImage = new BufferedImage(img.getWidth(null), img.getHeight(null),
-              BufferedImage.TYPE_INT_RGB);
+				BufferedImage.TYPE_INT_RGB);
 		currentTileImage.getGraphics().drawImage(img, 0, 0, null);
 	}
 	
