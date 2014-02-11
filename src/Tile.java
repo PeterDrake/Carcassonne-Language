@@ -5,15 +5,15 @@ public class Tile {
 	public final int ROAD = 1;
 	private int[] sides;
 	private boolean isEnd;
-	private int x;
-	private int y;
+	private int r;
+	private int c;
 	private Follower follower;
 
-	public Tile(int x, int y) {
+	public Tile(int r, int c, int[] sides) {
 		// Make this a method when merging
-		sides = new int[] { 0, 1, 0, 1 };
-		this.x = x;
-		this.y = y;
+		this.sides = sides;
+		this.r = r;
+		this.c = c;
 	}
 	
 	public void makeEnd() {
@@ -24,8 +24,8 @@ public class Tile {
 		isEnd = false;
 	}
 	
-	public void setFollower(int player, int location){
-		follower = new Follower(player, location);
+	public void setFollower(int player, int locationType, int location){
+		follower = new Follower(player, locationType, location);
 		
 	}
 	
@@ -38,29 +38,29 @@ public class Tile {
 		return isEnd;
 	}
 
-	public int getSide(int i) {
+	public int getSideType(int i) {
 		return sides[i];
 	}
 
 	public boolean hasRoad() {
 		for (int i = 0; i < SIDES; i++) {
-			if (getSide(i) == ROAD) {
+			if (getSideType(i) == ROAD) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public int getX() {
-		return x;
+	public int getRow() {
+		return r;
 	}
 
-	public int getY() {
-		return y;
+	public int getCol() {
+		return c;
 	}
 
-	public void placeFollower(int player, int location) {
-		follower = new Follower(player, location);
+	public void placeFollower(int player, int locationType, int location) {
+		follower = new Follower(player, locationType, location);
 	}
 	
 	public void removeFollower() {

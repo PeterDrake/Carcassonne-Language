@@ -10,15 +10,15 @@ public class TileTest {
 	
 	@Before
 	public void setUp() {
-		tile = new Tile(72,72);
+		tile = new Tile(72,72, new int[] { 0, 1, 0, 1, 1 });
 	}
 
 	@Test
 	public void testGetSide() {
-		assertEquals(tile.getSide(0), 0);
-		assertEquals(tile.getSide(1), 1);
-		assertEquals(tile.getSide(2), 0);
-		assertEquals(tile.getSide(3), 1);
+		assertEquals(tile.getSideType(0), 0);
+		assertEquals(tile.getSideType(1), 1);
+		assertEquals(tile.getSideType(2), 0);
+		assertEquals(tile.getSideType(3), 1);
 	}
 	
 	@Test
@@ -29,9 +29,10 @@ public class TileTest {
 	@Test
 	public void testSetFollower() {
 		assertNull(tile.getFollower());
-		tile.setFollower(0, 1);
+		tile.setFollower(0, 1, 4);
 		assertEquals(tile.getFollower().getPlayer(), 0);
-		assertEquals(tile.getFollower().getLocation(), 1);
+		assertEquals(tile.getFollower().getLocationType(), 1);
+		assertEquals(tile.getFollower().getLocation(), 4);
 	}
 
 

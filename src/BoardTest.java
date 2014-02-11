@@ -16,34 +16,35 @@ public class BoardTest {
 	@Test
 	public void testScoreRoads() {
 		int playerUp = 0;
-		int x = board.CENTER;
-		int y = board.CENTER;
+		int r = board.CENTER;
+		int c = board.CENTER;
 		
-		board.scoreRoads(x, y);
+		board.scoreTile(r, c);
 		assertEquals(board.getPlayerScore(playerUp), 0);
 		
-		board.placeFollower(x, y, playerUp, 1);
-		board.scoreRoads(x, y);
+		board.placeFollower(r, c, playerUp, 4);
+		board.scoreTile(r, c);
 		assertEquals(board.getPlayerScore(playerUp), 1);
 		
-		y += 1;
-		board.addTile(new Tile(x, y), x, y);
+		c += 1;
+		board.addTile(new Tile(r, c, new int[] { 0, 1, 0, 1, 1 }), r, c);
 		// Confusing add tile
-		board.placeFollower(x, y, playerUp, 1);
-		board.scoreRoads(x, y);
+		board.placeFollower(r, c, playerUp, 4);
+		board.scoreTile(r, c);
 		assertEquals(board.getPlayerScore(1), 0);
 		assertEquals(board.getPlayerScore(2), 0);
 		assertEquals(board.getPlayerScore(3), 0);
 		assertEquals(board.getPlayerScore(4), 0);
 		assertEquals(board.getPlayerScore(playerUp), 2);
+		
 	}
 
 	@Test
 	public void testPlaceTile() {
-		int newX = 72;
-		int newY = 73;
-		assertNull(board.getTile(newX, newY));
-		board.addTile(new Tile(newX,newY), newX, newY);
-		assertNotNull(board.getTile(newX, newY));
+		int newRow = 72;
+		int newCol = 73;
+		assertNull(board.getTile(newRow, newCol));
+		board.addTile(new Tile(newRow,newCol, new int[] { 0, 1, 0, 1, 1 }), newRow, newCol);
+		assertNotNull(board.getTile(newRow, newCol));
 	}
 }
