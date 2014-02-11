@@ -59,4 +59,12 @@ public class TileImage extends JComponent{
 		return new Dimension(image.getWidth(null), image.getHeight(null));
 	}
 	
+	public Image getImage(){
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+	
 }
