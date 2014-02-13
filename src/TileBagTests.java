@@ -21,7 +21,9 @@ public class TileBagTests {
 	
 	@Test
 	public void testGetRandomTile(){
-		
+		assertEquals(71, bag.getTiles().size());
+		assertNotNull(bag.getRandomTile());
+		assertEquals(70, bag.getTiles().size());
 	}
 
 }

@@ -21,11 +21,15 @@ class GameWindow extends JFrame {
 	boolean tileLocations[][];
 	public ArrayList<TilePlacementButton> activeButtons;
 	private ArrayList<TileImage> placedTiles;
+	
+	private TileBag tileBag;
 
 	public GameWindow() {
 		tileLocations = new boolean[144][144];
 		activeButtons = new ArrayList<TilePlacementButton>();
 		placedTiles = new ArrayList<TileImage>();
+		
+		tileBag = new TileBag();
 		
 		buttonPanel = new JPanel();
 		rotateButton = new JButton("Rotate");
@@ -101,8 +105,7 @@ class GameWindow extends JFrame {
 		}
 		add(buttonPanel);
 
-		TileImage newTile = new TileImage(new ImageIcon("04.jpg").getImage(),
-				x, y);
+		TileImage newTile = new TileImage(new ImageIcon(tileBag.getRandomTile().getID() + ".jpg").getImage(), x, y);
 		System.out.println("Adding new tile");
 		add(newTile, new GBC(x, y));
 		placedTiles.add(newTile);
