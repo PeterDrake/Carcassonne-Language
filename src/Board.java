@@ -7,7 +7,7 @@ public class Board {
 
 	public Board() {
 		board = new Tile[CENTER * 2][CENTER * 2];
-		board[CENTER][CENTER] = new Tile(CENTER, CENTER, new int[] { 0, 1, 0, 1, 1 });
+		board[CENTER][CENTER] = new Tile(CENTER, CENTER, new int[] { 0, 1, 0, 1, 1 }, false);
 
 		players = new Player[5];
 		for (int i = 0; i < players.length; i++) {
@@ -73,7 +73,7 @@ public class Board {
 	public int roadScoreR(ScoreTracker currentScore, Tile tile, int origin) {
 		Follower follower = tile.getFollower();
 		if (!tile.isEnd()) {
-			if (follower.getLocationType() == 1) {
+			if (follower != null && follower.getLocationType() == 1) {
 				// Watch for multiple roads
 				currentScore.followers[follower.getPlayer()] += 1;
 			}
@@ -86,10 +86,11 @@ public class Board {
 					}
 				}
 			}
-			return -1;
+			return 1;
 			// -1 because if there is no road, then the tile must be illegal
 		} else {
-			if (follower.getLocation() == origin
+//			currentScore.isComplete = true;
+			if (follower != null && follower.getLocation() == origin
 					&& follower.getLocationType() == 1) {
 				// Should we check location type here or assume it's legal
 				currentScore.followers[follower.getPlayer()] += 1;
@@ -138,21 +139,18 @@ public class Board {
 	}
 
 	public Tile getNeighbor(int i, Tile tile) {
-
-		if (i == 0) {
-			return board[tile.getRow()][tile.getCol() + 1];
-		}
-		if (i == 1) {
-			return board[tile.getRow() + 1][tile.getCol()];
-		}
-		if (i == 2) {
-			return board[tile.getRow()][tile.getCol() - 1];
-		}
-		if (i == 3) {
+		switch (i) {
+		case 0:
 			return board[tile.getRow() - 1][tile.getCol()];
+		case 1:
+			return board[tile.getRow()][tile.getCol() + 1];
+		case 2:
+			return board[tile.getRow() +  1][tile.getCol()];
+		case 3:
+			return board[tile.getRow()][tile.getCol() - 1];
+		default:
+			return null;
 		}
-		return null;
-
 	}
 
 	public Tile getTile(int r, int c) {

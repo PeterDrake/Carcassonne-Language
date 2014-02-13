@@ -10,7 +10,7 @@ public class TileTest {
 	
 	@Before
 	public void setUp() {
-		tile = new Tile(72,72, new int[] { 0, 1, 0, 1, 1 });
+		tile = new Tile(72,72, new int[] { 0, 1, 0, 1, 1 }, false);
 	}
 
 	@Test

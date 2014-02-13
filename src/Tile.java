@@ -9,11 +9,12 @@ public class Tile {
 	private int c;
 	private Follower follower;
 
-	public Tile(int r, int c, int[] sides) {
+	public Tile(int r, int c, int[] sides, boolean isEnd) {
 		// Make this a method when merging
 		this.sides = sides;
 		this.r = r;
 		this.c = c;
+		this.isEnd = isEnd;
 	}
 	
 	public void makeEnd() {
