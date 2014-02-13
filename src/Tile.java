@@ -8,6 +8,7 @@ public class Tile {
 	private int r;
 	private int c;
 	private Follower follower;
+	private String ID;
 
 	public Tile(int r, int c, int[] sides, boolean isEnd) {
 		// Make this a method when merging
@@ -16,23 +17,27 @@ public class Tile {
 		this.c = c;
 		this.isEnd = isEnd;
 	}
-	
+
+	public Tile(String ID) {
+		this.ID = ID;
+	}
+
 	public void makeEnd() {
 		isEnd = true;
 	}
-	
+
 	public void makeNotEnd() {
 		isEnd = false;
 	}
-	
-	public void setFollower(int player, int locationType, int location){
+
+	public void setFollower(int player, int locationType, int location) {
 		follower = new Follower(player, locationType, location);
-		
+
 	}
-	
-	public Follower getFollower(){
+
+	public Follower getFollower() {
 		return follower;
-		
+
 	}
 
 	public boolean isEnd() {
@@ -63,9 +68,13 @@ public class Tile {
 	public void placeFollower(int player, int locationType, int location) {
 		follower = new Follower(player, locationType, location);
 	}
-	
+
 	public void removeFollower() {
 		follower = null;
+	}
+
+	public String getID() {
+		return ID;
 	}
 
 }
