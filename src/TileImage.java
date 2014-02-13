@@ -54,9 +54,10 @@ public class TileImage extends JComponent {
 		g.drawImage(image, 0, 0, null);
 
 		if (meeple) {
-			g.drawImage(resizedFollower, meepleX - (resizeNumber / 2), meepleY
-					- (resizeNumber / 2), null);
-
+			while (!g.drawImage(resizedFollower, meepleX - (resizeNumber / 2), meepleY
+					- (resizeNumber / 2), null)) {
+				// Keep trying until the image loads
+			}
 		}
 	}
 
