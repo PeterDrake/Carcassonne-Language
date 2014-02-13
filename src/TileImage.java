@@ -24,10 +24,21 @@ public class TileImage extends JComponent {
 	public int getGridY() {
 		return y;
 	}
+	
+	public void setGridX(int x){ this.x = x;}
+	public void setGridY(int y){this.y = y;}
 
 	public TileImage(Image image, int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.image = image;
+		imageFollower = new ImageIcon("MEEPLE.png").getImage();
+		resizedFollower = imageFollower.getScaledInstance(resizeNumber,
+				resizeNumber, Image.SCALE_DEFAULT);
+		addMouseListener(new MouseHandler());
+	}
+	
+	public TileImage(Image image){
 		this.image = image;
 		imageFollower = new ImageIcon("MEEPLE.png").getImage();
 		resizedFollower = imageFollower.getScaledInstance(resizeNumber,

@@ -20,6 +20,11 @@ public class RotateAction implements ActionListener{
 	
 	public void setTile(TileImage tile){
 		this.tile = tile;
+		if(tile == null){ 
+			currentTileImage = null;
+			return; 
+			}
+		
 		Image img = tile.getImage();
 		currentTileImage = new BufferedImage(img.getWidth(null), img.getHeight(null),
 				BufferedImage.TYPE_INT_RGB);
@@ -38,11 +43,6 @@ public class RotateAction implements ActionListener{
 	}
 	
 	
-
-//	public void paintComponent(Graphics g) {
-//		g.drawImage(currentTileImage, 0, 0, null);
-//	}
-
 	/**
 	 * Apply a filter and repaint.
 	 * 

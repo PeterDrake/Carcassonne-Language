@@ -1,4 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,8 +16,9 @@ class GameWindow extends JFrame {
 
 	private JPanel buttonPanel;
 	public TileImage currentTile;
-	public RotateAction rotateAction;
 	public JButton rotateButton;
+	private RotateAction rotateAction;
+	private JButton confirmButton;
 	
 	private GridBagLayout layout;
 	boolean tileLocations[][];
@@ -23,6 +26,8 @@ class GameWindow extends JFrame {
 	private ArrayList<TileImage> placedTiles;
 	
 	private TileBag tileBag;
+	private Tile nextTile;
+	private TileImage tileToBePlaced;
 
 	public GameWindow() {
 		tileLocations = new boolean[144][144];
@@ -32,11 +37,17 @@ class GameWindow extends JFrame {
 		tileBag = new TileBag();
 		
 		buttonPanel = new JPanel();
-		rotateButton = new JButton("Rotate");
-		buttonPanel.add(rotateButton);
+		buttonPanel.setLayout(new BorderLayout());
 		add(buttonPanel);
+		
+		rotateButton = new JButton("Rotate");
 		rotateAction = new RotateAction(this);
 		rotateButton.addActionListener(rotateAction);
+		buttonPanel.add(rotateButton, BorderLayout.NORTH);
+		
+		confirmButton = new JButton("Confirm");
+		confirmButton.addActionListener(new ConfirmAction(this));
+		buttonPanel.add(confirmButton);	
 		
 		layout = new GridBagLayout();
 		setLayout(layout);
@@ -46,7 +57,8 @@ class GameWindow extends JFrame {
 		add(initialTile, new GBC(CENTER, CENTER));
 		placedTiles.add(initialTile);
 		tileLocations[CENTER][CENTER] = true;
-
+		
+		getAndDisplayNextTile();
 
 		generateButtons(CENTER, CENTER);
 		pack();
@@ -79,6 +91,14 @@ class GameWindow extends JFrame {
 		}
 		pack();
 	}
+	
+	public void getAndDisplayNextTile(){
+		nextTile = tileBag.getRandomTile();
+		tileToBePlaced = new TileImage(new ImageIcon(nextTile.getID() + ".jpg").getImage());
+		buttonPanel.add(tileToBePlaced, BorderLayout.SOUTH);
+		rotateAction.setTile(null);
+		pack();
+	}
 
 	public TilePlacementButton getButton(int x, int y) {
 		for (TilePlacementButton button : activeButtons) {
@@ -93,6 +113,10 @@ class GameWindow extends JFrame {
 	}
 
 	public void placeTile(int x, int y) {
+		if(tileToBePlaced == null){
+			return;
+		}
+		
 		activeButtons.remove(getButton(x, y));
 		getContentPane().removeAll();
 		
@@ -105,12 +129,12 @@ class GameWindow extends JFrame {
 		}
 		add(buttonPanel);
 
-		TileImage newTile = new TileImage(new ImageIcon(tileBag.getRandomTile().getID() + ".jpg").getImage(), x, y);
-		System.out.println("Adding new tile");
-		add(newTile, new GBC(x, y));
-		placedTiles.add(newTile);
-		rotateAction.setTile(newTile);
-		System.out.println("Generating buttons");
+		tileToBePlaced.setGridX(x);
+		tileToBePlaced.setGridY(y);		
+		add(tileToBePlaced, new GBC(x, y));
+		placedTiles.add(tileToBePlaced);
+		rotateAction.setTile(tileToBePlaced);
+		tileToBePlaced = null;
 		generateButtons(x, y);
 		pack();
 		revalidate();
@@ -131,7 +155,6 @@ class GameWindow extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Placing a tile at " + x + ", " + y);
 			placeTile(x, y);
 		}
 
